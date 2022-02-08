@@ -28,6 +28,13 @@ public class ProductEntity implements Product {
     private String name;
     private String description;
     private int price;
+    //Added a new property: 'category' to product entity
+    private String category;
+
+    @Override
+    public String getCategory() {return category;}
+
+    public void setCategory(String category) {this.category = category; }
 
     @Override
     public int getId() {
@@ -69,11 +76,12 @@ public class ProductEntity implements Product {
     }
 
     @Ignore
-    public ProductEntity(int id, String name, String description, int price) {
+    public ProductEntity(int id, String name, String description, int price, String category) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.category = category;
     }
 
     public ProductEntity(Product product) {
@@ -81,5 +89,6 @@ public class ProductEntity implements Product {
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrice();
+        this.category = product.getCategory();
     }
 }
