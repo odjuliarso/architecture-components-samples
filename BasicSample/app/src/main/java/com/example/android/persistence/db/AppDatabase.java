@@ -41,7 +41,7 @@ import com.example.android.persistence.db.entity.ProductFtsEntity;
 
 import java.util.List;
 
-@Database(entities = {ProductEntity.class, ProductFtsEntity.class, CommentEntity.class}, version = 2)
+@Database(entities = {ProductEntity.class, ProductFtsEntity.class, CommentEntity.class}, version = 3)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -57,6 +57,15 @@ public abstract class AppDatabase extends RoomDatabase {
 
         }
     };
+
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE products ADD COLUMN category TEXT");
+            database.execSQL("UPDATE products SET `category` = 'test1' ");
+        }
+    };
+
     private static AppDatabase sInstance;
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
@@ -100,6 +109,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     }
                 })
                 .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_2_3)
                 .build();
     }
 
