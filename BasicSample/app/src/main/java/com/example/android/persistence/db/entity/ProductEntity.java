@@ -25,6 +25,7 @@ import com.example.android.persistence.model.Product;
 public class ProductEntity implements Product {
     @PrimaryKey
     private int id;
+
     private String name;
     private String description;
     private int price;
